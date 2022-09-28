@@ -1,7 +1,25 @@
 {% extends 'layout.html' %}
+{% load humanize %}
 
-    {% block body %}
-
-        <h3>anaasdas</h3>
-
-    {% endblock %}
+{% block body %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Current Price</th>
+            <th scope="col">Market Cap</th>
+        </tr>
+        </thead>
+        <tbody id="cryptocurrencies">
+        {% for coin in coins %}
+            <tr>
+                <td><img src="{{ coin.image }}" alt="Coin Images" style="width: 30px;height: 30px"></td>
+                <td>{{ coin.name }}</td>
+                <td>{{ coin.current_price|intcomma }}</td>
+                <td>{{ coin.market_cap|intcomma }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
