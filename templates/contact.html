@@ -10,18 +10,19 @@
                             <div class="h3 fw-light">Contact Us</div>
                             <p class="mb-4 text-muted">Do you have any questions? Please do not hesitate to
                                 contact us directly.</p>
-                            {% if messages %}
-                                <ul class="messages">
-                                    {% for message in messages %}
-                                        <li{% if message.tags %}
-                                            class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                                    {% endfor %}
-                                </ul>
+                           {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                            </div>
+
+                        {% endfor %}
+
                             {% endif %}
 
                         </div>
                         <form action="" method="POST">
-                            {% csrf_token %} <!-- Guvenlik aciklarini kapatiyor; Saldirilara karsi onlem -->
+                            {% csrf_token %}
                             <div class="row row-fluid">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     {{ form.first_name }}
