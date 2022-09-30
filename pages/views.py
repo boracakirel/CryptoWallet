@@ -5,19 +5,18 @@ from django.contrib.messages.views import SuccessMessageMixin
 from .forms import ContactForm
 from django.urls import reverse_lazy
 from pycoingecko import CoinGeckoAPI
-import locale
 
 
 def index(request):
     cg = CoinGeckoAPI()
     result = cg.get_coins_markets('usd')
-    #
-    # coins = {}
-    # for coin in result:
-    #     coins.add
-    # locale.setlocale(locale.LC_ALL, '')
-    # result = [{'name': 'bitcoin', 'image': 'btc.png', 'current_price': locale.currency(18921.54), 'market_cap': locale.currency(132134)}]
     return render(request, 'index.html', context={'coins': result})
+
+
+def currency(request):
+    cg = CoinGeckoAPI()
+    result = cg.get_coins_markets('usd')
+    return render(request, 'currency.html', context={'coins': result})
 
 
 class AboutView(TemplateView):
@@ -33,3 +32,10 @@ class ContactView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+def search(request):
+    cg = CoinGeckoAPI()
+    result = cg.search(name__contains=request.GET.get('search', ''))
+
+    return render(request, 'currency.html', context=result)
