@@ -36,6 +36,18 @@ class ContactView(SuccessMessageMixin, FormView):
 
 def search(request):
     cg = CoinGeckoAPI()
-    result = cg.search(name__contains=request.GET.get('search', ''))
+    result = cg.search(query=request.GET['query'])
+    coin_list = []
+    for coin in result['coins']:
+        # response = cg.get_coin_by_id(id=coin['id'])
+        # market_response = cg.get_price(ids=coin['id'], include_market_cap=True, vs_currencies='usd')
+        coin_dict = {
+            'image': coin['thumb'],
+            'name': coin['name'],
+            # 'current_price': response['market_data']['current_price']['usd'],
+            # 'market_cap': market_response[coin['id']]['usd_market_cap'],
+        }
 
-    return render(request, 'currency.html', context=result)
+        coin_list.append(coin_dict)
+
+    return render(request, 'currency.html', context={'coins': coin_list})
