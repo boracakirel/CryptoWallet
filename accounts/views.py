@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, RegisterForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from pycoingecko import CoinGeckoAPI
 
 
 def user_login(request):
@@ -53,5 +55,11 @@ def user_register(request):
     return render(request, 'register.html', {'form': form})
 
 
+@login_required(login_url='login')
 def dashboard(request):
-    pass
+    cg = CoinGeckoAPI()
+    return render(request, 'dashboard.html')
+
+
+def buy_crypto(request):
+    return render(request, 'add_crypto.html')
