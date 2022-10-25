@@ -19,7 +19,7 @@
         {% for coin in coins %}
             <tr>
                 <td><img src="{{ coin.image }}" alt="Coin Images" style="width: 30px;height: 30px"></td>
-                <td>{{ coin.name }}</td>
+                <td><a href="{% url 'detail' coin.id %}">{{ coin.name }}</a></td>
                 <td>{{ coin.current_price|intcomma }}</td>
                 <td>{{ coin.market_cap|intcomma }}</td>
             </tr>
