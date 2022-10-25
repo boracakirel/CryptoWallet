@@ -44,6 +44,7 @@ def search(request):
         coin_dict = {
             'image': coin['thumb'],
             'name': coin['name'],
+            'id': coin['id'],
             # 'current_price': response['market_data']['current_price']['usd'],
             # 'market_cap': market_response[coin['id']]['usd_market_cap'],
         }
@@ -51,3 +52,9 @@ def search(request):
         coin_list.append(coin_dict)
 
     return render(request, 'currency.html', context={'coins': coin_list})
+
+
+def coin_detail(request, coin_id):
+    cg = CoinGeckoAPI()
+    result = cg.get_coin_by_id(id=coin_id)
+    return render(request, 'coin_detail.html', context={'coin': result})
