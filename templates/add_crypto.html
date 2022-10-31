@@ -1,5 +1,7 @@
 <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
+        <form action="{% url 'add_crypto' %}" method="post">
+            {% csrf_token %}
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">{{ coin.name }}</h1>
@@ -8,19 +10,21 @@
             <div class="modal-body">
                 Quantity:
                <div class="input-group mb-3">
-                    <input type="text" class="form-control" aria-label="Sizing example input"
+                    <input type="text" name="quantity" class="form-control" aria-label="Sizing example input"
                            aria-describedby="inputGroup-sizing-sm">
                 </div>
                 Price Per Coin:
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" aria-label="Sizing example input"
-                           aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" name="price" class="form-control" aria-label="Sizing example input"
+                           aria-describedby="inputGroup-sizing-sm" value="{{ coin.market_data.current_price.usd}}">
                 </div>
             </div>
             <div class="modal-footer">
+                    <input type="hidden" name="coin_id" value="{{ coin.id }}">
+                    <button type="submit" class="btn btn-outline-dark">Add My Wallet</button>
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-outline-warning">Add my wallet</button>
             </div>
         </div>
+        </form>
     </div>
 </div>
