@@ -1,9 +1,12 @@
+import decimal
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, RegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from pycoingecko import CoinGeckoAPI
+from accounts.models import Transaction
 
 
 def user_login(request):
@@ -57,9 +60,19 @@ def user_register(request):
 
 @login_required(login_url='login')
 def dashboard(request):
-    cg = CoinGeckoAPI()
     return render(request, 'dashboard.html')
 
 
-def buy_crypto(request):
-    return render(request, 'add_crypto.html')
+def add_crypto(request):
+    user_id = request.user.id
+    coin_id = request.POST['coin_id']
+    quantity = request.POST['quantity']
+    price = request.POST['price']
+    amount = int(quantity) * decimal.Decimal(price)
+    user = User.objects.get(id=user_id)
+
+    transaction = Transaction(coin_id=coin_id, amount=amount, quantity=quantity, price=price)
+    transaction.save()
+    transaction.user.add(user)
+
+    return redirect('dashboard')
