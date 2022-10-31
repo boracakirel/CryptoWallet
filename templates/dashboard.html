@@ -1,5 +1,41 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <h1>hello</h1>
+    <div class="card" style="width:20rem">
+        <h5 class="card-header">Current Balance</h5>
+        <div class="card-body">
+            <h5 class="card-title">1232</h5>
+            <a href="#"  class="btn btn-outline-dark" style="width:18rem">Add New</a>
+        </div>
+    </div>
+    <br><br>
+    <h4>Your Assets</h4>
+    <hr>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Holdings</th>
+            <th scope="col">Avg. Buy Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+        </tr>
+        <tr>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+        </tr>
+        <tr>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+        </tr>
+        </tbody>
+    </table>
 {% endblock %}
