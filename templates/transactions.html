@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+            <tr>
+
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.price }}</td>
+                <td>{{ transaction.quantity }}</td>
+                <td>{{ transaction.amount }}</td>
+
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
