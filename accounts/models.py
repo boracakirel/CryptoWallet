@@ -9,4 +9,5 @@ class Transaction(models.Model):
     amount = models.DecimalField(decimal_places=10, max_digits=100)
     user = models.ManyToManyField(User, blank=True, related_name='transactions')
     coin_id = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, null=True)
 
