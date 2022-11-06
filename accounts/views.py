@@ -60,6 +60,13 @@ def user_register(request):
 
 @login_required(login_url='login')
 def dashboard(request):
+    # current_user = request.user
+    # transaction = current_user.transactions.all()
+    #
+    # context = {
+    #     'id': transactions['id']
+    # }
+
     return render(request, 'dashboard.html')
 
 
@@ -68,11 +75,19 @@ def add_crypto(request):
     coin_id = request.POST['coin_id']
     quantity = request.POST['quantity']
     price = request.POST['price']
+    name = request.POST['name']
     amount = int(quantity) * decimal.Decimal(price)
     user = User.objects.get(id=user_id)
 
-    transaction = Transaction(coin_id=coin_id, amount=amount, quantity=quantity, price=price)
+    transaction = Transaction(coin_id=coin_id, amount=amount, quantity=quantity, price=price, name=name)
     transaction.save()
     transaction.user.add(user)
 
     return redirect('dashboard')
+
+
+def transactions(request, coin_id):
+    current_user = request.user
+    result = current_user.transactions.filter(coin_id=coin_id)
+
+    return render(request, 'transactions.html', context={'transactions': result})
