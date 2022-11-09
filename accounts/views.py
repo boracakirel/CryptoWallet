@@ -90,4 +90,29 @@ def transactions(request, coin_id):
     current_user = request.user
     result = current_user.transactions.filter(coin_id=coin_id)
 
-    return render(request, 'transactions.html', context={'transactions': result})
+    return render(request, 'transactions.html', context={'transactions': result, 'coin_id': coin_id})
+
+
+def edit_transaction(request):
+    coin_id = request.POST['coin_id']
+    quantity = request.POST['quantity']
+    price = request.POST['price']
+    transaction_id = request.POST['transaction_id']
+    amount = int(quantity) * decimal.Decimal(price)
+
+    transaction = Transaction.objects.get(id=transaction_id)
+    transaction.quantity = quantity
+    transaction.price = price
+    transaction.amount = amount
+
+    transaction.save()
+
+    return redirect('transactions', coin_id)
+
+
+def delete_transaction(request, coin_id, transaction_id):
+    transaction = Transaction.objects.get(id=transaction_id)
+
+    transaction.delete()
+
+    return redirect('transactions', coin_id)
