@@ -8,16 +8,26 @@
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Amount</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for transaction in transactions %}
+            {% include 'edit_transaction.html' %}
             <tr>
 
                 <td>{{ transaction.date }}</td>
                 <td>{{ transaction.price }}</td>
                 <td>{{ transaction.quantity }}</td>
                 <td>{{ transaction.amount }}</td>
+                <td>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                            data-bs-target="#editModal-{{ transaction.id }}">
+                        Edit
+                    </button>
+                    <a class="btn btn-outline-dark" href="{% url 'delete' coin_id transaction.id %}">Remove</a>
+
+                </td>
 
             </tr>
         {% endfor %}
